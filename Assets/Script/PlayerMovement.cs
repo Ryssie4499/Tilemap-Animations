@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 movement;
     private float direction;
     private Animator anim;
+
     private void Start()
     {
         //a inizio gioco è girato in avanti (destra)
@@ -16,15 +17,21 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             anim.SetTrigger("IsAttacking");
         }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            anim.SetTrigger("Kill");
+        }
     }
+
     private void FixedUpdate()
     {
         Move();
     }
+
     private void Move()
     {
         //con l'input si muove
@@ -47,8 +54,8 @@ public class PlayerMovement : MonoBehaviour
         else
             anim.SetBool("IsMoving", false);
 
-            //la scala varia in base alla direzione
-            transform.localScale = new Vector3(direction, transform.localScale.y, transform.localScale.z);
+        //la scala varia in base alla direzione
+        transform.localScale = new Vector3(direction, transform.localScale.y, transform.localScale.z);
 
         transform.Translate(movement);
     }
