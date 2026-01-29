@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Bush : MonoBehaviour
+public class Bush : MonoBehaviour, IDamageable
 {
     [SerializeField] int maxHealth;
     public int currentHealth;
@@ -8,5 +8,15 @@ public class Bush : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+    }
+
+    public void Despawn()
+    {
+        Destroy(gameObject);
     }
 }

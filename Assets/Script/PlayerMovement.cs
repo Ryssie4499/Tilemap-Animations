@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -24,12 +25,21 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
         {
             anim.SetTrigger("Kill");
+            StartCoroutine(timeBeforeReload());
         }
     }
 
     private void FixedUpdate()
     {
-        Move();
+        if (GameManager.Instance.status == GameStatus.GameRunning)
+            Move();
+
+
+        //extra
+        //if (GameManager.Instance.status == GameStatus.GameRunning)
+        //    Time.timeScale = 1;
+        //else
+        //    Time.timeScale = 0;
     }
 
     private void Move()
@@ -58,5 +68,11 @@ public class PlayerMovement : MonoBehaviour
         transform.localScale = new Vector3(direction, transform.localScale.y, transform.localScale.z);
 
         transform.Translate(movement);
+    }
+
+    IEnumerator timeBeforeReload()
+    {
+        yield return new WaitForSeconds(2f);
+        GameManager.Instance.ReloadScene();
     }
 }
