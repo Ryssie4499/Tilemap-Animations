@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public GameStatus status;
     public int points;
+    public static event Action OnPointsAdded;
 
     private void OnEnable()
     {
@@ -28,7 +29,7 @@ public class GameManager : MonoBehaviour
     private void GetPoints(int maxHealth)
     {
         points += maxHealth;
-        Debug.Log(points);
+        OnPointsAdded?.Invoke();
     }
 
     private void Awake()
