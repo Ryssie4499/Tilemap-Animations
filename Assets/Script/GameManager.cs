@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,9 +10,26 @@ public enum GameStatus
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] GameObject pauseMenu;
     public static GameManager Instance;
     public GameStatus status;
+    public int points;
 
+    private void OnEnable()
+    {
+        Bush.OnItemDestroyed += GetPoints;
+    }
+
+
+    private void OnDisable()
+    {
+        Bush.OnItemDestroyed -= GetPoints;
+    }
+    private void GetPoints(int maxHealth)
+    {
+        points += maxHealth;
+        Debug.Log(points);
+    }
 
     private void Awake()
     {
@@ -42,6 +60,17 @@ public class GameManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void OpenPauseMenu()
+    {
+        pauseMenu.SetActive(true);
+        status = GameStatus.GamePaused;
+    }
+    public void ClosePauseMenu()
+    {
+        pauseMenu.SetActive(false);
+        status = GameStatus.GameRunning;
     }
 }
 //ReloadScene --> reloadate la scena corrente

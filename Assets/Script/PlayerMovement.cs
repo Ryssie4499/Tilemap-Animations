@@ -3,11 +3,24 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement Instance;
+
+
     //velocità
     [SerializeField] float speed;
     private Vector3 movement;
     private float direction;
     private Animator anim;
+
+    private void Awake()
+    {
+        if(Instance != null)
+        {
+            Destroy(this);
+            return;
+        }
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -16,24 +29,11 @@ public class PlayerMovement : MonoBehaviour
 
         anim = GetComponent<Animator>();
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            anim.SetTrigger("IsAttacking");
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            anim.SetTrigger("Kill");
-            StartCoroutine(timeBeforeReload());
-        }
-    }
 
     private void FixedUpdate()
     {
         if (GameManager.Instance.status == GameStatus.GameRunning)
             Move();
-
 
         //extra
         //if (GameManager.Instance.status == GameStatus.GameRunning)
@@ -74,5 +74,25 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         GameManager.Instance.ReloadScene();
+    }
+
+    public void Attack()
+    {
+        anim.SetTrigger("IsAttacking");
+    }
+    public void Die()
+    {
+        anim.SetTrigger("Kill");
+        StartCoroutine(timeBeforeReload());
+    }
+    public void PauseMenu()
+    {
+        //e lo status è in running --> apro il menu di pausa
+        if (GameManager.Instance.status == GameStatus.GameRunning)
+            GameManager.Instance.OpenPauseMenu();
+
+        //sennò --> chiudo il menu di pausa
+        else
+            GameManager.Instance.ClosePauseMenu();
     }
 }

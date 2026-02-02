@@ -1,7 +1,10 @@
 using UnityEngine;
+using System;
 
 public class Bush : MonoBehaviour, IDamageable
 {
+    public static event Action<int> OnItemDestroyed;
+
     [SerializeField] int maxHealth;
     public int currentHealth;
 
@@ -17,6 +20,11 @@ public class Bush : MonoBehaviour, IDamageable
 
     public void Despawn()
     {
+        OnItemDestroyed?.Invoke(maxHealth);
         Destroy(gameObject);
     }
 }
+//evento di distruzione del bush
+//vita massima del bush
+//punti
+//aggiunta di punti in base alla vita massima
