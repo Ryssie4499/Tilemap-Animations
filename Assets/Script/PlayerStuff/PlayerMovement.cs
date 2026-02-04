@@ -1,10 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IDamageable
 {
     public static PlayerMovement Instance;
 
+    [SerializeField] int maxHealth;
+    public int currentHealth;
 
     //velocità
     [SerializeField] float speed;
@@ -28,18 +30,14 @@ public class PlayerMovement : MonoBehaviour
         direction = 1;
 
         anim = GetComponent<Animator>();
+
+        currentHealth = maxHealth;
     }
 
     private void FixedUpdate()
     {
-        if (GameManager.Instance.status == GameStatus.GameRunning)
-            Move();
-
-        //extra
         //if (GameManager.Instance.status == GameStatus.GameRunning)
-        //    Time.timeScale = 1;
-        //else
-        //    Time.timeScale = 0;
+            Move();
     }
 
     private void Move()
@@ -95,4 +93,15 @@ public class PlayerMovement : MonoBehaviour
         else
             GameManager.Instance.ClosePauseMenu();
     }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+    }
+
+    public void Despawn()
+    {
+        Die();
+    }
+
 }

@@ -24,7 +24,3 @@ public class Bush : MonoBehaviour, IDamageable
         Destroy(gameObject);
     }
 }
-//evento di distruzione del bush
-//vita massima del bush
-//punti
-//aggiunta di punti in base alla vita massima

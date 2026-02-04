@@ -25,8 +25,4 @@ public class UIManager : MonoBehaviour
     {
         points.text = GameManager.Instance.points.ToString();
     }
-    //fate un TMP_Text che si aggiorna solo ed esclusivamente quando aggiungo punti (non in Update)
-    //se io ho 4 punti --> il testo si aggiorna a "4"
 }
-//TMP_Text Marco
-//Marco.text = numero.ToString()

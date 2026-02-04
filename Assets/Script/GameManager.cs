@@ -19,12 +19,14 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         Bush.OnItemDestroyed += GetPoints;
+        EnemyMovement.OnEnemyKilled += GetPoints;
     }
 
 
     private void OnDisable()
     {
         Bush.OnItemDestroyed -= GetPoints;
+        EnemyMovement.OnEnemyKilled -= GetPoints;
     }
     private void GetPoints(int maxHealth)
     {
@@ -46,6 +48,14 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         status = GameStatus.GamePaused;
+    }
+
+    private void Update()
+    {
+        if (status == GameStatus.GamePaused)
+            Time.timeScale = 0f;
+        else
+            Time.timeScale = 1f;
     }
 
     public void ReloadScene()

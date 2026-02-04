@@ -10,7 +10,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance != null)
+        if (Instance != null)
         {
             Destroy(this);
             return;
@@ -33,16 +33,25 @@ public class PlayerAttack : MonoBehaviour
         //mi prendo l'interfaccia e il Bush
         collidedObject.gameObject.TryGetComponent(out IDamageable damageable);
         collidedObject.gameObject.TryGetComponent(out Bush bush);
+        collidedObject.gameObject.TryGetComponent(out EnemyMovement enemy);
 
         //se non esiste l'interfaccia o il bush sull'oggetto triggerato, skippo
-        if (damageable == null || bush == null) return;
+        if (damageable == null) return;
 
         //gli faccio danno
         damageable.TakeDamage(damagePerHit);
 
-        //sennò lo distruggo
-        if (bush.currentHealth <= 0)
-            StartCoroutine(timeBeforeDespawn(damageable));
+        if (bush != null)
+        {
+            //sennò lo distruggo
+            if (bush.currentHealth <= 0)
+                StartCoroutine(timeBeforeDespawn(damageable));
+        }
+        if (enemy != null)
+        {
+            if (enemy.currentHealth <= 0)
+                StartCoroutine(timeBeforeDespawn(damageable));
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
