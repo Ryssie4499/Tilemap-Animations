@@ -20,6 +20,12 @@ public class EnemyMovement : MonoBehaviour, IDamageable
         anim = GetComponent<Animator>();
         canMove = true;
         currentHealth = maxHealth;
+
+        //per avere una scala indipendente dal parent, devo compensarla dividendo l'unità (1) per la scala del parent
+        transform.localScale = new Vector3(
+            -1f / transform.parent.transform.localScale.x,
+            1f / transform.parent.transform.localScale.y,
+            1f / transform.parent.transform.localScale.z);
     }
 
     private void Update()

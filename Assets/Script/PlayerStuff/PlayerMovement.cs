@@ -5,7 +5,7 @@ public class PlayerMovement : MonoBehaviour, IDamageable
 {
     public static PlayerMovement Instance;
 
-    [SerializeField] int maxHealth;
+    public int maxHealth;
     public int currentHealth;
 
     //velocità

@@ -5,7 +5,7 @@ public class PlayerAttack : MonoBehaviour
 {
     public static PlayerAttack Instance;
 
-    [SerializeField] int damagePerHit; //danno al colpo
+    public int damagePerHit; //danno al colpo
     GameObject collidedObject;
 
     private void Awake()
